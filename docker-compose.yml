@@ -1,24 +1,22 @@
 services:
-  web-services:
+  web_services:
     container_name: web-app
     build:
-      context: /app
+      context: ./app
       dockerfile: Dockerfile
     ports:
       - "8080:5000"
     depends_on:
-      db-services:
-      condition:
-        service-healthy
-  db-services:
+      db_services:
+        condition: service_healthy
+  db_services:
     container_name: db-app
     image: mysql:8.0
     volumes:
-      db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=task_db
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=root
+      MYSQL_DATABASE: task_db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
@@ -29,15 +27,14 @@ services:
     container_name: phpmyadmin-app
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST:db-services
-      PMA_USER:${MYSQL_USER}
-      PMA_PASSWORD:${MYSQL_ROOT_PASSWORD}
+      PMA_HOST: db_services
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "8081:80"
     depends_on:
-      - db-services 
-    condition:
-      service_healthy     
+        db_services: 
+          condition: service_healthy
 
 volumes:
   db_data:
