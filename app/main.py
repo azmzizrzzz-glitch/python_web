@@ -7,7 +7,7 @@ app = Flask(__name__)
 def get_db_connection():
     # این متغیرها باید از .env بیایند
     return mysql.connector.connect(
-        host="db-services", # نام سرویس در داکر کمپوز
+        host="db_services", # نام سرویس در داکر کمپوز
         user="root",
         password=os.getenv("MYSQL_ROOT_PASSWORD"),
         database="task_db"
