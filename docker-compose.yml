@@ -9,6 +9,9 @@ services:
     depends_on:
       db_services:
         condition: service_healthy
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}    
   db_services:
     container_name: db-app
     image: mysql:8.0
