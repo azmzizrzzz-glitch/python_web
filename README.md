@@ -1,1 +1,1 @@
-# python_web
+# we need .env file to have the correct config
